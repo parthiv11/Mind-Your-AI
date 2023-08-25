@@ -1,0 +1,65 @@
+#prompt-container{
+
+    width: 100%;
+    height: 50px;
+
+}
+
+.hidden{
+    display: none;
+}
+
+#prompt-input{
+    resize: none;
+}
+
+#context-input{
+    resize: vertical;
+    height: 50px;
+    max-height: 70px;
+}
+
+pre{
+    white-space: pre-wrap; 
+    max-width: 98%; /* TODO */
+    max-height: 20%; /* TODO */
+    overflow: auto; /* TODO: Edit scroll bars */
+    border: 1px solid #ccc;
+    /* padding: 10px; */
+}
+
+.input{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    outline: none;
+}
+
+#modal{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* centre align  the overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    /* make the modal container a little smaller than the overlay */
+    width: 70%;
+    height: 80%;
+    /* add some padding to the modal content */
+    padding: 20px;
+    /* add a background color to the modal content */
+    background-color: white;
+    /* add a box shadow to the modal container */
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+    /* add a border radius to the modal container */
+    border-radius: 5px;
+}
