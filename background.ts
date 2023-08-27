@@ -2,12 +2,17 @@ import { getPrediction } from "./mindsdb.js"
 
 
 chrome.action.onClicked.addListener((tab) => {
-    
+
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => {
             const selectedText = window.getSelection().toString(); // Get the selected text
-            const toggleModalEvent = new CustomEvent("toggleModalEvent", { detail: selectedText });
+            const toggleModalEvent = new CustomEvent("toggleModalEvent", {
+                detail: {
+                    type: "toggleModal",
+                    context: selectedText
+                }
+            });
             document.dispatchEvent(toggleModalEvent);
 
         },
@@ -31,21 +36,29 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
 chrome.contextMenus.create({
     id: "mind-your-ai",
-    title: "Send Contex to Mind Your AI %s",
+    title: "Send Context to Mind Your AI",
     contexts: ["selection"],
 });
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === "mind-your-ai") {
-      const selectedText = info.selectionText; // Get the selected text
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: () => {
-            const toggleModalEvent = new CustomEvent("toggleModalEvent", { detail: selectedText });
-            document.dispatchEvent(toggleModalEvent);
-        },
-      });
+        const selectedText = info.selectionText; // Get the selected text
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: (selectedText) => {
+                const toggleModalEvent = new CustomEvent("toggleModalEvent", {
+                    detail: {
+                        type: "toggleModal",
+                        context: selectedText
+                    }
+
+
+                });
+                document.dispatchEvent(toggleModalEvent);
+            },
+            args: [selectedText],
+        });
     }
-  });
-  
+});
+
 
