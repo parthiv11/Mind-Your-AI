@@ -52,5 +52,3 @@ This will generate a production bundle that can be zipped and published to vario
 7. Click on "Load unpacked" and select the project folder. Your extension will be loaded and ready for testing.
 
 Feel free to reach out to us if you encounter any issues or need further assistance. Happy coding!
-
-**For more detailed instructions, refer to our [Documentation](https://docs.plasmo.com/).**
