@@ -12,7 +12,6 @@ export const getPrediction = async (question, context) => {
         FROM mindsdb.crx_openai
         WHERE question=${mysql.escape(question)}
         and context=${mysql.escape(context)};`;
-
     try {
         const response = await fetch(url, {
             method: 'POST',

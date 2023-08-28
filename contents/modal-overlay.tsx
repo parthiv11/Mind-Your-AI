@@ -17,7 +17,7 @@ export const config: PlasmoCSConfig = {
 // Function to create a <style> element with the CSS text
 export const getStyle = () => {
   const style = document.createElement("style");
-  style.textContent = cssTailwindText + cssText;
+  style.textContent = cssTailwindText+cssText;
   return style;
 };
 
@@ -25,42 +25,29 @@ export const getStyle = () => {
 export const getShadowHostId = () => "mind-your-ai-modal";
 
 // Define the ModalOverlay component
+
 const ModalOverlay = () => {
-  // State for output, context, and modal visibility
-  const [output, setOutput] = useState(
-    "Type your request above and press enter"
-  );
+  const [output, setOutput] = useState("Type your request above and press enter");
   const [context, setContext] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Refs for DOM elements
   const contextEl = useRef(null);
   const questionEl = useRef(null);
-  const modalRef = useRef(null);
 
-
-  // Function to toggle modal visibility
   function toggleModalVisibility() {
     setIsVisible(!isVisible);
   }
 
-  // Effect to listen for the custom event
   useEffect(() => {
     const toggleModalEventListener = (event) => {
       toggleModalVisibility();
-      console.log("event Triggered", event);
-      if (event.detail.context != null && event.detail.context != "")
+      if (event.detail.context != null && event.detail.context !== "") {
         setContext(event.detail.context);
-    };
-    const handleClickOutside = (event) => {
-      console.log("event Triggered", event);
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        // toggleModalVisibility();
+      }else{
+        setContext(null);
       }
     };
-
-    document.addEventListener("click", handleClickOutside);
 
     document.addEventListener("toggleModalEvent", toggleModalEventListener);
 
@@ -69,18 +56,19 @@ const ModalOverlay = () => {
         "toggleModalEvent",
         toggleModalEventListener
       );
-      document.removeEventListener("click", handleClickOutside);
-
     };
   });
 
-  // Function to handle textarea submission
-  async function onEnterTextareaSubmit(e: KeyboardEvent) {
+  async function onEnterTextareaSubmit(e) {
     if (e.key === "Enter" && !e.ctrlKey) {
       e.preventDefault();
       setIsLoading(true);
+
+      let context=null
       const question = questionEl.current.value;
-      const context = contextEl.current.value;
+      if(contextEl.current!=null){
+          context = contextEl.current.value;
+      }
       const message = {
         type: "get-prediction",
         question: question,
@@ -94,7 +82,7 @@ const ModalOverlay = () => {
         if (response != null) {
           setOutput(response);
         } else {
-          setOutput("Something went Wrong !!!!");
+          setOutput("Something went Wrong !!!! ");
         }
       });
     }
@@ -103,19 +91,17 @@ const ModalOverlay = () => {
   return (
     <>
       {isVisible && (
-        <div ref={modalRef} id={"modal"} >
-          {/* Button to Close modal visibility */}
-          <button onClick={toggleModalVisibility}>Close Modal</button>
-          {/* Prompt for entering question */}
-          <Prompt onEnter={onEnterTextareaSubmit} re={questionEl} />
-
-          {/* Display context if available */}
-          {context && <Context re={contextEl} contextValue={context} />}
-          
-
-          {/* Display prediction output */}
-          <Prediction output={output} isLoading={isLoading}/>
-        </div>
+          <div 
+          id="modal"
+          className="flex flex-col fixed top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] max-w-2xl h-auto max-h-[80vh] overflow-y-auto min-w-[300px] min-h-[500px]
+          bg-white shadow-md p-5 w-[75%] border rounded-lg dark:bg-gray-800">
+            <button 
+            onClick={toggleModalVisibility} 
+            className="fixed right-10 top-3 w-[50px] h-[50px] flex justify-end text-xl font-bold text-black-500 hover:text-pink-600">X</button>
+            <Prompt onEnter={onEnterTextareaSubmit} re={questionEl} />
+            {context && <Context re={contextEl} contextValue={context} />}
+            <Prediction output={output} isLoading={isLoading} />
+          </div>
       )}
     </>
   );

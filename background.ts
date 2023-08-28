@@ -16,7 +16,7 @@ chrome.action.onClicked.addListener((tab) => {
             document.dispatchEvent(toggleModalEvent);
 
         },
-    }).then(() => console.log("button clicked"));
+    }).then(() => console.log("Mind AI clicked"));
 });
 
 
