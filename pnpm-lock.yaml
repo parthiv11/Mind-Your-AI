@@ -23,6 +23,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-icons:
+    specifier: ^4.10.1
+    version: 4.10.1(react@18.2.0)
 
 devDependencies:
   '@ianvs/prettier-plugin-sort-imports':
@@ -4875,6 +4878,14 @@ packages:
 
   /react-error-overlay@6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
+    dev: false
+
+  /react-icons@4.10.1(react@18.2.0):
+    resolution: {integrity: sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-refresh@0.14.0:

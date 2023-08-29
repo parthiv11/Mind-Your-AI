@@ -6,6 +6,7 @@ chrome.action.onClicked.addListener((tab) => {
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => {
+            
             const selectedText = window.getSelection().toString(); // Get the selected text
             const toggleModalEvent = new CustomEvent("toggleModalEvent", {
                 detail: {
