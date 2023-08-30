@@ -52,3 +52,14 @@ This will generate a production bundle that can be zipped and published to vario
 7. Click on "Load unpacked" and select the project folder. Your extension will be loaded and ready for testing.
 
 Feel free to reach out to us if you encounter any issues or need further assistance. Happy coding!
+
+🌟 Exciting Upcoming Features:
+- [ ] Blog Summarization 📚✨
+- [ ] Web-Aware Queries 🌐🔍
+- [ ] Chatbot Integration 🤖💬
+- [ ] PDF Support 📄🔗
+- [ ] AI-generated Social Media Posts 📱📝 (LinkedIn, Twitter, Gmail)
+- [ ] Multiple LLM Support 🧠🔗
+- [ ] Open Source LLM Integration via Replicate 🌐💡
+
+Stay tuned for these amazing additions! 🚀🌈
