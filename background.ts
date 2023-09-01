@@ -1,4 +1,5 @@
 import { getPrediction } from "./mindsdb.js"
+import { getLinkedinPrediction } from "./mindsdb.js"
 
 
 chrome.action.onClicked.addListener((tab) => {
@@ -25,6 +26,18 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.type === 'get-prediction') {
         try {
             const pred = await getPrediction(message.question, message.context);
+            sendResponse(pred);
+        } catch (error) {
+            console.error("Error in prediction:", error);
+            sendResponse(null); // Handle the error response
+        }
+    }
+    else if (message.type === "generate-linkedin-comment") {
+    console.log("message received")
+
+        try {
+            const pred = await getLinkedinPrediction(message.post, message.prompt);
+            console.log(pred)
             sendResponse(pred);
         } catch (error) {
             console.error("Error in prediction:", error);
