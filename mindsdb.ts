@@ -1,33 +1,47 @@
 import mysql from "mysql"
 
-const url = "https://cloud.mindsdb.com/api/sql/query"
-const cookies = { session: process.env.MDB_COOKIE }
-const cookieString = JSON.stringify(cookies)
+const apiUrl = 'https://cloud.mindsdb.com/api/sql/query';
+const mdbCookie = process.env.MDB_COOKIE;
+const cookieString = JSON.stringify({ session: mdbCookie });
+
+const fetchData = async (sqlQuery) => {
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: cookieString,
+      },
+      body: JSON.stringify({
+        query: sqlQuery,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      return data.data;
+    } else {
+      throw new Error(`Failed to fetch data: ${data.message}`);
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getPrediction = async (question, context) => {
   const MODAL_SQL_QUERY = `
-        SELECT answer
-        FROM mindsdb.crx_openai
-        WHERE question=${mysql.escape(question)}
-        and context=${mysql.escape(context)};`
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookieString
-      },
-      body: JSON.stringify({
-        query: MODAL_SQL_QUERY
-      })
-    })
+    SELECT answer
+    FROM mindsdb.crx_openai
+    WHERE question=${mysql.escape(question)}
+    and context=${mysql.escape(context)};`;
 
-    const data = await response.json()
-    return data.data[0][0] // Return the data
+  try {
+    const result = await fetchData(MODAL_SQL_QUERY);
+    return result[0]?.[0] || null;
   } catch (error) {
-    throw error // Re-throw the error to be caught higher up
+    throw error;
   }
-}
+};
 
 export const getLinkedinPrediction = async (post, prompt) => {
   post = post.replace(/'/g, '"');
@@ -38,26 +52,14 @@ export const getLinkedinPrediction = async (post, prompt) => {
     WHERE post=${mysql.escape(post)}
     AND prompt=${mysql.escape(prompt)}
     USING
-        prompt_template = 'Generate and mimic human style  nice comment for LinkedIn post:{{post}}  as decribed in prompt: {{prompt}}.  Answer:',
-        max_tokens = 3900,
-        temperature = 0.6;;`
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookieString
-      },
-      body: JSON.stringify({
-        query: LINK_COMMENT_SQL_QUERY
-      })
-    })
+        prompt_template = 'Generate short and nice comment for LinkedIn comment:{{post}} as described in prompt: {{prompt}}. Answer:',
+        max_tokens = 2900,
+        temperature = 0.6;`;
 
-    const data = await response.json()
-    // TODO Handle max token error
-    // data.error_message==[openai/crx_openai]: This model's maximum context length is 4097 tokens. However, you requested 4270 tokens (370 in the messages, 3900 in the completion). Please reduce the length of the messages or completion.
-    return data.data[0] // Return the data
+  try {
+    const result = await fetchData(LINK_COMMENT_SQL_QUERY);
+    return result[0]?.[0] || null;
   } catch (error) {
-    throw error // Re-throw the error to be caught higher up
+    throw error;
   }
-}
+};
