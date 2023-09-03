@@ -1,17 +1,23 @@
 import cssTailwindText from "data-text:~/contents/style.css"
-import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo"
+import customStyle from "url:~/contents/linkedin.css"
+import type {
+  PlasmoCSConfig,
+  PlasmoGetInlineAnchorList,
+  PlasmoMountShadowHost
+} from "plasmo"
 import React, { createContext, useState } from "react"
 import { LuArrowLeft, LuEdit3 } from "react-icons/lu"
 
 import Button from "~components/Button"
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://www.linkedin.com/*"]
+  matches: ["https://www.linkedin.com/*"],
+  css: ["linkedin.css"]
 }
 
-export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
-  document.querySelector(".display-flex .flex-wrap")
-// document.querySelector('.comments-comment-texteditor')
+export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
+  document.querySelectorAll("div.display-flex.flex-wrap")
+
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -19,7 +25,7 @@ export const getStyle = () => {
   return style
 }
 
-export const getShadowHostId = () => "mind-linkedin"
+export const getShadowHostId = () => "mindYourAI-linkedin"
 const buttonsArray = [
   {
     content: "Impressive!",
@@ -93,20 +99,24 @@ function LinkedinSuggestion() {
   )
 
   // Function to get a random button object from buttonsArray
-  const  getRandomUniqueButtons = (array, count=3) => {
-  
-    const shuffledArray = array.slice().sort(() => 0.5 - Math.random()); // Shuffle the array
+  const getRandomUniqueButtons = (array, count = 3) => {
+    const shuffledArray = array.slice().sort(() => 0.5 - Math.random()) // Shuffle the array
     return (
       <>
         {shuffledArray.slice(0, count).map((obj, index) => (
-          <Button key={index} obj={obj} Icon={LuEdit3} />
+          <Button
+            key={index}
+            obj={obj}
+            context={LinkedinContext}
+            Icon={LuEdit3}
+          />
         ))}
       </>
-    );
+    )
   }
 
   const writeComment = (parentElement, text) => {
-    let input = parentElement.querySelector(".ql-editor.ql-blank p")
+    let input = parentElement.querySelector(".ql-editor p")
     input.textContent = text
   }
 
@@ -125,9 +135,8 @@ function LinkedinSuggestion() {
     }
 
     chrome.runtime.sendMessage(message, (response) => {
-      setLoading(false) 
+      setLoading(false)
       if (response != null) {
-        console.log(response)
         writeComment(host, response)
       } else {
         writeComment(host, "Something went Wrong !!!! ")
@@ -138,51 +147,51 @@ function LinkedinSuggestion() {
 
   return (
     <LinkedinContext.Provider
-      value={{ setEditMode, setDefaultValue, generateComment }}>
-      {!isLoading ? (
-        <>
-          {!isEditMode ? (
-            <div
-              style={{}}
-              className="my-[6px] mx-[5px] flex flex-1 justify-start items-center overflow-hidden">
-              <span className="flex py-1">
-                {getRandomUniqueButtons(buttonsArray)}
-              </span>
-              <div className="center-with-flex ml-auto">
-                <div className="border-green-500 text-green-500 hover:border-green-600 active:border-green-700 disabled:border-green-200 flex max-w-[150px] items-center justify-evenly text-ellipsis whitespace-nowrap rounded-full border text-xl mx-5 font-semibold transition-colors duration-300 ease-in-out">
-                  <button
-                    onClick={() => setEditMode(true)}
-                    type="button"
-                    className="border-green-500 hover:border-green-600 hover:bg-green-100 focus-visible:ring-green-400 active:border-green-700 truncate px-2 py-1 ring-0 transition-[background-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring grow rounded-full">
-                    Create
-                  </button>
+      value={{ setEditMode, setDefaultValue, generate: generateComment }}>
+      <div className="grow flex ">
+        {!isLoading ? (
+          <>
+            {!isEditMode ? (
+              <div className="my-[6px] mx-[5px] flex flex-1 justify-between items-center overflow-hidden">
+                <span className="flex gap-1 py-1">
+                  {getRandomUniqueButtons(buttonsArray)}
+                </span>
+                <div className="center-with-flex ml-auto">
+                  <div className="border-green-500 text-green-500 hover:border-green-600 active:border-green-700 disabled:border-green-200 flex max-w-[150px] items-center justify-evenly text-ellipsis whitespace-nowrap rounded-full border text-xl mx-5 font-semibold transition-colors duration-300 ease-in-out">
+                    <button
+                      onClick={() => setEditMode(true)}
+                      type="button"
+                      className="border-green-500 hover:border-green-600 hover:bg-green-100 focus-visible:ring-green-400 active:border-green-700 truncate px-2 py-1 ring-0 transition-[background-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring grow rounded-full">
+                      Create
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="flex flex-1 justify-between">
-              <button className="hover:bg-black-100 focus-visible:ring-black-400 h-full rounded-r-full p-1 ring-0 transition-[background-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring">
-                <LuArrowLeft onClick={() => setEditMode(false)} />
-              </button>
-              <textarea
-                defaultValue={defaultValue}
-                placeholder="Enter custom prompt"
-                className="border-green-500 text-green-500 rounded-md border text-xl mx-5 font-semibold resize-none grow px-1"
-              />
-              <button
-                onClick={(e) => generateComment(e)}
-                className="border-green-600 bg-green-300	 hover:border-green-800 hover:bg-green-200 focus-visible:ring-green-400 active:border-green-700 px-2 py-1 ring-0 transition-[background-color,box-shadow] duration-300">
-                Generate
-              </button>
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="mx-auto my-auto">
-          <p>Loading...</p>
-          {/* You can add a loading animation or spinner here */}
-        </div>
-      )}
+            ) : (
+              <div className="flex grow justify-between">
+                <button className="max-w-[20px] hover:bg-black-100 focus-visible:ring-black-400 h-full rounded-r-full p-1 ring-0 transition-[background-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring">
+                  <LuArrowLeft onClick={() => setEditMode(false)} />
+                </button>
+                <textarea
+                  defaultValue={defaultValue}
+                  placeholder="Enter custom prompt"
+                  className="border-green-500 text-green-500 rounded-md border text-xl mx-5 font-semibold resize-none grow px-1"
+                />
+                <button
+                  onClick={(e) => generateComment(e)}
+                  className="border-green-600 bg-green-300 max-w-[80px ] m-[3] rounded-[20px]	 hover:border-green-800 hover:bg-green-200 focus-visible:ring-green-400 active:border-green-700 px-2 py-1 ring-0 transition-[background-color,box-shadow] duration-300">
+                  Generate
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="flex min-w-full justify-center items-center p-4">
+  <p className="rounded-lg bg-green-500 text-white px-[5px]">Generating...</p>
+  {/* You can add a loading animation or spinner here */}
+</div>
+        )}
+      </div>
     </LinkedinContext.Provider>
   )
 }
