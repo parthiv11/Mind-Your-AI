@@ -22,7 +22,6 @@ export const mountShadowHost: PlasmoMountShadowHost = ({
   anchor,
   mountState
 }) => {
-  console.log(mountState)
   anchor.element.prepend(shadowHost)
   mountState.observer.disconnect() // OPTIONAL DEMO: stop the observer as needed
 }
@@ -64,7 +63,6 @@ function GmailReply() {
 
   const generateEmail = (e) => {
     setLoading(true)
-    console.log(e.nativeEvent.target.getRootNode().host)
     const repltArr = document.querySelectorAll("div.ii.gt")
     const lastReply = repltArr[repltArr.length - 2].textContent
     const refinedReply = lastReply.replace(/\n\s+/g, "\n")
@@ -84,7 +82,6 @@ function GmailReply() {
     chrome.runtime.sendMessage(message, (response) => {
       setLoading(false)
       if (response != null) {
-        console.log(e.nativeEvent.target.parentNode)
         const parent = e.nativeEvent.target.parentNode
         writeEmail(parent, response)
       } else {

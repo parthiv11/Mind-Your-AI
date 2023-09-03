@@ -20,7 +20,7 @@ chrome.action.onClicked.addListener((tab) => {
                 document.dispatchEvent(toggleModalEvent)
             }
         })
-        .then(() => console.log("Mind AI clicked"))
+        .then(() => console.log("Mind Your AI clicked"))
 })
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -35,7 +35,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     } else if (message.type === "generate-linkedin-comment") {
         try {
             const pred = await getLinkedinPrediction(message.post, message.prompt)
-            console.log(pred)
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)
@@ -44,7 +43,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     } else if (message.type === "generate-gmail-reply") {
         try {
             const pred = await getGmailPrediction(message.lastMail, message.prompt)
-            console.log(pred)
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)
@@ -54,7 +52,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
      else if (message.type === "generate-gmail-compose") {
         try {
             const pred = await getGmailComposePrediction(message.prompt)
-            console.log(pred)
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)

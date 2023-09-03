@@ -17,16 +17,7 @@ export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
 export const getShadowHostId: PlasmoGetShadowHostId = () =>
   `mindYourAi-gmail-icon`
 
-// export const mountShadowHost: PlasmoMountShadowHost = ({
-//   shadowHost,
-//   anchor,
-//   mountState
-// }) => {
-//   console.log(mountState)
-//   anchor.element.prepend(shadowHost)
-//   console.log("Gmail icon  mounted")
-//   // mountState.observer.disconnect() // OPTIONAL DEMO: stop the observer as needed
-// }
+
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -41,7 +32,6 @@ function GmailIcon() {
       .getRootNode()
       .host.closest(".aDg")
       .querySelector('[id^="mindYourAi-gmail-:"]')
-      console.log(rootOfBar)
 
     if (rootOfBar.style.display == "none") {
       rootOfBar.style.display = "block"
