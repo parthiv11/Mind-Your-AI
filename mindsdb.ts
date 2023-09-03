@@ -52,7 +52,7 @@ export const getLinkedinPrediction = async (post, prompt) => {
     WHERE post=${mysql.escape(post)}
     AND prompt=${mysql.escape(prompt)}
     USING
-        prompt_template = 'Generate short and nice comment for LinkedIn comment:{{post}} as described in prompt: {{prompt}}. Answer:',
+        prompt_template = 'Generate short and nice comment for me LinkedIn comment for post:{{post}} as described by me in prompt: {{prompt}}. Answer:',
         max_tokens = 2900,
         temperature = 0.6;`;
 
@@ -73,7 +73,7 @@ export const getGmailPrediction = async (lastReply, prompt) => {
     WHERE mail=${mysql.escape(lastReply)}
     AND prompt=${mysql.escape(prompt)}
     USING
-        prompt_template = 'Generate short and nice gmail reply for mail:{{mail}} as described in prompt: {{prompt}}. Answer:',
+        prompt_template = 'Generate short and nice gmail reply for mail received by me:{{mail}} as described by me in prompt: {{prompt}}. Answer:',
         max_tokens = 2900,
         temperature = 0.6;`;
 

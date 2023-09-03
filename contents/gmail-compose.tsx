@@ -16,7 +16,7 @@ export const config: PlasmoCSConfig = {
 }
 
 export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
-  document.querySelectorAll("div.aDg")
+  document.querySelectorAll("div.aDj")
 
 export const getShadowHostId: PlasmoGetShadowHostId = ({ element }) =>
   `mindYourAi-gmail-` + element.getAttribute("id")
@@ -98,12 +98,7 @@ function GmailReply() {
     return (
       <>
         {shuffledArray.slice(0, count).map((obj, index) => (
-          <Button
-            key={index}
-            obj={obj}
-            context={GmailContext}
-            Icon={LuEdit3}
-          />
+          <Button key={index} obj={obj} context={GmailContext} Icon={LuEdit3} />
         ))}
       </>
     )
@@ -121,15 +116,12 @@ function GmailReply() {
     const lines = mail.split("\n")
     const htmlLines = lines.map((line) => `<p>${line}</p>`)
     const htmlReply = htmlLines.join("\n")
-    parent.querySelector('div[aria-label="Message Body"]').innerHTML =
-      htmlReply
+    parent.querySelector('div[aria-label="Message Body"]').innerHTML = htmlReply
   }
 
   const generateEmail = (e) => {
     setLoading(true)
-    const parent = e.nativeEvent.target
-      .getRootNode()
-      .host.closest('.I5')
+    const parent = e.nativeEvent.target.getRootNode().host.closest(".I5")
 
     const message = {
       type: "generate-gmail-compose",
