@@ -1,6 +1,6 @@
-<div style="text-align: center;"><h1 > Mind Your AI </h1>
-
-<img src="assets/icon.png" height=150px>
+<div align="center">
+    <h1 style="margin: 0;">Mind Your AI</h1>
+    <img src="assets/icon.png" height="250px" >
 </div>
 Welcome to the Brower extension which enhances your browsing experience by utilizing MindsDB's backend capabilities for intelligent predictions. It is like AI Assistant on every page in brower with <kbd>Alt+A</kbd>.It facitalte to write mail and linkedIn messages with ai without switxhing tabs and copy paste of context ans answer.
 
@@ -40,8 +40,18 @@ npm install
 ```
 3. Rename a `.env.example` to `.env` file 
 4. Go to cloud.mindsdb.com, open the developer tools, and navigate to the "**Application**" tab.
-5. Under the "**Storage**" section, click on "**Cookies**" and find the "**sesion**" cookie and copy it's value.
-6. Paste the copied value after the equal sign (=) in the **MDB_COOKIE** line in the `.env` file.
+5. Copy Paste this SQL Query in MindsDB Cloud Editor, to create model which will be used in answering Queries
+```sql
+CREATE MODEL crx_openai
+PREDICT answer
+USING
+    engine = 'openai',
+    prompt_template = 'Context: {{context}}. Question: {{question}}. Answer:',
+    max_tokens = 3900,
+    temperature = 0.6;
+```
+7. Under the "**Storage**" section, click on "**Cookies**" and find the "**sesion**" cookie and copy it's value.
+8. Paste the copied value after the equal sign (=) in the **MDB_COOKIE** line in the `.env` file.
 
 ![image](https://github.com/parthiv11/Mind-Your-AI/assets/75653580/a53fd40f-d16d-4d79-aaf7-c288d706ffff)
 
