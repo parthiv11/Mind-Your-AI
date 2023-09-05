@@ -2,7 +2,8 @@
     <h1 style="margin: 0;">Mind Your AI: Browser Extension with AI SuperPowers</h1>
     <img src="assets/icon.png" height="250px" >
 </div>
-Welcome to the **Mind Your AI** browser extension, designed to enhance your browsing experience by harnessing the capabilities of MindsDB's backend for intelligent predictions. With this extension, you'll have an AI assistant at your fingertips on every web page, accessible with just a keystroke (<kbd>Alt+A</kbd>). Say goodbye to the hassle of switching tabs and copying and pasting content for writing emails and LinkedIn messages.
+
+Welcome to the <b>Mind Your AI</b> browser extension, designed to enhance your browsing experience by harnessing the capabilities of MindsDB's backend for intelligent predictions. With this extension, you'll have an AI assistant at your fingertips on every web page, accessible with just a keystroke (<kbd>Alt+A</kbd>). Say goodbye to the hassle of switching tabs and copying and pasting content for writing emails and LinkedIn messages.
 
 ## 🌟 Exciting Features:
 
