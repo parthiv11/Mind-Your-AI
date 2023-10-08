@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)
-            sendResponse(null) // Handle the error response
+            sendResponse(null) 
         }
     } else if (message.type === "generate-linkedin-comment") {
         try {
@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)
-            sendResponse(null) // Handle the error response
+            sendResponse(null) 
         }
     } else if (message.type === "generate-gmail-reply") {
         try {
@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)
-            sendResponse(null) // Handle the error response
+            sendResponse(null) 
         }
     }
      else if (message.type === "generate-gmail-compose") {
@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             sendResponse(pred)
         } catch (error) {
             console.error("Error in prediction:", error)
-            sendResponse(null) // Handle the error response
+            sendResponse(null) 
         }
     }
 })

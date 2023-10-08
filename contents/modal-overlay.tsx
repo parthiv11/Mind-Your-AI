@@ -97,7 +97,7 @@ const ModalOverlay = () => {
           bg-white shadow-md p-5 w-[75%] border rounded-lg dark:bg-gray-800">
             <button 
             onClick={toggleModalVisibility} 
-            className="fixed right-10 top-3 w-[50px] h-[50px] flex justify-end text-xl font-bold text-black-500 hover:text-pink-600">X</button>
+            className="fixed right-10 top-3 w-[50px] h-[50px] flex justify-end text-xl font-bold text-indigo-700	  hover:text-pink-600">X</button>
             <Prompt onEnter={onEnterTextareaSubmit} re={questionEl} />
             {context && <Context re={contextEl} contextValue={context} />}
             <Prediction output={output} isLoading={isLoading} />
