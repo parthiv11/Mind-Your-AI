@@ -1,39 +1,43 @@
 import mysql from "mysql"
 
-const apiUrl = 'https://cloud.mindsdb.com/api/sql/query';
-const mdbCookie = process.env.MDB_COOKIE;
-const cookieString = JSON.stringify({ session: mdbCookie });
+
+export const BACKEND_URL = "https://cloud.mindsdb.com/api/sql/query"
+let M_Y_AI_KEY = null
+
+chrome.storage.local.get(["m_y_ai_key"]).then((result) => {
+  M_Y_AI_KEY=result.m_y_ai_key
+});
 
 const fetchData = async (sqlQuery) => {
   try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
+    const response = await fetch(BACKEND_URL, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Cookie: cookieString,
+        "Content-Type": "application/json",
+        Authorization: M_Y_AI_KEY
       },
       body: JSON.stringify({
-        query: sqlQuery,
-      }),
-    });
+        query: sqlQuery
+      })
+    })
 
-    const data = await response.json();
+    const data = await response.json()
     if (response.ok) {
-      return data.data;
+      return data.data
     } else {
-      throw new Error(`Failed to fetch data: ${data.message}`);
+      throw new Error(`Failed to fetch data: ${data.message}`)
     }
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 export const getPrediction = async (question, context) => {
   const MODAL_SQL_QUERY = `
     SELECT answer
     FROM mindsdb.crx_openai
     WHERE question=${mysql.escape(question)}
-    and context=${mysql.escape(context)};`;
+    and context=${mysql.escape(context)};`
 
   try {
     const result = await fetchData(MODAL_SQL_QUERY);
@@ -44,7 +48,7 @@ export const getPrediction = async (question, context) => {
 };
 
 export const getLinkedinPrediction = async (post, prompt) => {
-  post = post.replace(/'/g, '"');
+  post = post.replace(/'/g, '"')
 
   const LINK_COMMENT_SQL_QUERY = `
     SELECT answer
@@ -54,18 +58,18 @@ export const getLinkedinPrediction = async (post, prompt) => {
     USING
         prompt_template = 'Generate short and nice comment for me LinkedIn comment for post:{{post}} as described by me in prompt: {{prompt}}. Answer:',
         max_tokens = 2900,
-        temperature = 0.6;`;
+        temperature = 0.6;`
 
   try {
     const result = await fetchData(LINK_COMMENT_SQL_QUERY);
     return result[0]?.[0] || null;
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 export const getGmailPrediction = async (lastReply, prompt) => {
-  lastReply = lastReply.replace(/'/g, '"');
+  lastReply = lastReply.replace(/'/g, '"')
 
   const GMAIL_REPLY_SQL_QUERY = `
     SELECT answer
@@ -75,18 +79,17 @@ export const getGmailPrediction = async (lastReply, prompt) => {
     USING
         prompt_template = 'Generate short and nice gmail reply for mail received by me:{{mail}} as described by me in prompt: {{prompt}}. Answer:',
         max_tokens = 2900,
-        temperature = 0.6;`;
+        temperature = 0.6;`
 
   try {
     const result = await fetchData(GMAIL_REPLY_SQL_QUERY);
     return result[0]?.[0] || null;
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 export const getGmailComposePrediction = async (prompt) => {
-
   const GMAIL_COMPOSE_SQL_QUERY = `
     SELECT answer
     FROM mindsdb.crx_openai
@@ -94,12 +97,12 @@ export const getGmailComposePrediction = async (prompt) => {
     USING
         prompt_template = 'Draft a nice email as described in prompt: {{prompt}}. Answer:',
         max_tokens = 2900,
-        temperature = 0.6;`;
+        temperature = 0.6;`
 
   try {
     const result = await fetchData(GMAIL_COMPOSE_SQL_QUERY);
     return result[0]?.[0] || null;
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}

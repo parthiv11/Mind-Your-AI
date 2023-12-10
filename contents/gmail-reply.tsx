@@ -55,6 +55,7 @@ function GmailReply() {
   )
 
   const writeEmail = (parent, reply) => {
+
     const lines = reply.split("\n")
     const htmlLines = lines.map((line) => `<p>${line}</p>`)
     const htmlReply = htmlLines.join("\n")
@@ -64,7 +65,7 @@ function GmailReply() {
   const generateEmail = (e) => {
     setLoading(true)
     const repltArr = document.querySelectorAll("div.ii.gt")
-    const lastReply = repltArr[repltArr.length - 2].textContent
+    const lastReply = repltArr[0].textContent
     const refinedReply = lastReply.replace(/\n\s+/g, "\n")
     try {
       const replyBtn = document.querySelector(".amn").firstChild
@@ -74,15 +75,17 @@ function GmailReply() {
     }
 
     const message = {
-      type: "generate-gmail-reply",
-      lastMail: refinedReply,
-      prompt: defaultValue
+      query_type: "gmail",
+      inputs: {
+        last_reply: refinedReply,
+        prompt: defaultValue
+      }
     }
 
     chrome.runtime.sendMessage(message, (response) => {
       setLoading(false)
-      if (response != null) {
         const parent = e.nativeEvent.target.parentNode
+      if (response != null) {
         writeEmail(parent, response)
       } else {
         writeEmail(parent, "Something went Wrong !!!! ")

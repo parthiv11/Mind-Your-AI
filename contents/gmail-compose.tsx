@@ -124,8 +124,8 @@ function GmailReply() {
     const parent = e.nativeEvent.target.getRootNode().host.closest(".I5")
 
     const message = {
-      type: "generate-gmail-compose",
-      prompt: defaultValue
+      query_type: "gmail_compose",
+      inputs: {prompt: defaultValue}
     }
 
     chrome.runtime.sendMessage(message, (response) => {

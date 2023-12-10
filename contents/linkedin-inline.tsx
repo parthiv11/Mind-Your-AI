@@ -129,9 +129,10 @@ function LinkedinSuggestion() {
     let text = el.textContent
     const postText = text.replace(/…see more/g, "")
     const message = {
-      type: "generate-linkedin-comment",
-      post: postText,
-      prompt: defaultValue
+      query_type: "linkedin",
+      inputs: {
+        post: postText,
+      prompt: defaultValue}
     }
 
     chrome.runtime.sendMessage(message, (response) => {

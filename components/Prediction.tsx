@@ -19,9 +19,11 @@ const Prediction = ({ output, isLoading }) => {
           <IoCopy />
         </button>
       </div>
-      <pre className=" grow h-full whitespace-pre-wrap max-w-full border border-gray-300 p-2 bg-gray-100 dark:bg-gray-700">
+      <>
+      <pre className=" text-black grow h-full whitespace-pre-wrap max-w-full border border-gray-300 p-2 bg-gray-100 dark:bg-gray-700">
         {output}
       </pre>
+      </>
     </div>
   )
 }

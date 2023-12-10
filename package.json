@@ -1,6 +1,6 @@
 {
   "name": "mind-your-ai",
-  "displayName": "Mind your ai",
+  "displayName": "Mind Your AI",
   "version": "0.0.1",
   "description": "Helping AI",
   "author": "Parthiv Makwana",
@@ -13,7 +13,7 @@
     "dotenv": "^16.3.1",
     "mindsdb-js-sdk": "^2.2.2",
     "mysql": "^2.18.1",
-    "plasmo": "0.82.1",
+    "plasmo": "0.84.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1"
@@ -40,12 +40,15 @@
       }
     },
     "host_permissions": [
-      "https://*/*"
+      "https://*/*",
+      "extension://*/*",
+      "*://*/*"
     ],
     "permissions": [
       "tabs",
       "scripting",
-      "contextMenus"
+      "contextMenus",
+      "storage"
     ]
   }
 }
