@@ -20,7 +20,7 @@ const SignIn = () => {
         key: key
       }
     }
-    chrome.runtime.sendMessage(message, (response) => {
+    chrome.runtime.sendMessage(message, async (response) => {
       if (response == "success") {
         setSuccess(true)
         setError(null)

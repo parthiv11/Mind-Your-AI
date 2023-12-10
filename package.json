@@ -40,9 +40,7 @@
       }
     },
     "host_permissions": [
-      "https://*/*",
-      "extension://*/*",
-      "*://*/*"
+      "https://*/*"
     ],
     "permissions": [
       "tabs",

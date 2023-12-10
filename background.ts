@@ -25,7 +25,7 @@ chrome.action.onClicked.addListener((tab) => {
     .then(() => console.log("Mind Your AI clicked"))
 })
 
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener( (message, sender, sendResponse) => {
   if (message.type === "login-attempt") {
     const options = {
       method: "POST",
@@ -36,22 +36,34 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     }
 
     fetch(`${BACKEND_URL}/login`, options)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response["token"]) {
-          chrome.storage.local
-            .set({ m_y_ai_key: response["token"] })
-            .then(() => {
-              sendResponse("success")
-            })
+    .then((response) => response.json())
+    .then((response) => {
+      if (response["token"]) {
+        chrome.storage.local
+          .set({ m_y_ai_key: response["token"] })
+          .then(() => {
+            if (chrome.runtime.lastError) {
+              console.error("Error in setting local storage:", chrome.runtime.lastError);
+            } else {
+              sendResponse("success");
+            }
+          });
+      } else {
+        if (chrome.runtime.lastError) {
+          console.error("Error in login:", chrome.runtime.lastError);
         } else {
-          sendResponse(response)
+          sendResponse(response);
         }
-      })
-      .catch((err) => {
-        console.error("Error in login:", err)
-        sendResponse({ error: `Error in login:, ${err}` })
-      })
+      }
+    })
+    .catch((err) => {
+      console.error("Error in login:", err);
+      if (chrome.runtime.lastError) {
+        console.error("Error in login:", chrome.runtime.lastError);
+      } else {
+        sendResponse({ error: `Error in login:, ${err}` });
+      }
+    });
   } else {
     chrome.storage.local.get(["m_y_ai_key"]).then((result) => {
       const options = {
@@ -78,6 +90,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         })
     })
   }
+  return true
 })
 
 chrome.contextMenus.create({
