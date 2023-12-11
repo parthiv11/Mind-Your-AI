@@ -43,38 +43,8 @@ Follow these steps to get started with development:
     npm install
     ```
 
-3. **Set up MindsDB:**
 
-   - Visit [cloud.mindsdb.com](https://cloud.mindsdb.com).
-   - Copy and paste the following SQL Query in MindsDB Cloud Editor to create a model that will be used for answering queries:
-
-     ```sql
-     CREATE MODEL crx_openai
-     PREDICT answer
-     USING
-         engine = 'openai',
-         prompt_template = 'Context: {{context}}. Question: {{question}}. Answer:',
-         max_tokens = 3900,
-         temperature = 0.6;
-     ```
-
-4. **Get your session cookie value:**
-
-   - Open the developer tools and navigate to the "Application" tab.
-   - Under the "**Storage**" section, click on "**Cookies**."
-   - Find the "**session**" cookie and copy its value.
-
-![MindsDB Cookie](https://github.com/parthiv11/Mind-Your-AI/assets/75653580/a53fd40f-d16d-4d79-aaf7-c288d706ffff)
-
-5. **Rename a `.env.example` to `.env` file.**
-6. **Paste the session cookie value in the `.env` file:**
-
-   ```dotenv
-   MDB_COOKIE=your-session-cookie-value
-   ```
-
-
-7. **Start the development server:**
+4. **Start the development server:**
 
    ```bash
    pnpm dev
@@ -82,11 +52,15 @@ Follow these steps to get started with development:
    npm run dev
    ```
 
-8. **Load the extension in your browser:**
+5. **Load the extension in your browser:**
 
    - Open your browser and load the appropriate development build. For example, if you are developing for the Chrome browser with manifest v3, use the path: `build/chrome-mv3-dev`.
 
-9. **Use select context from the webpage and press <kbd>Alt+A</kbd> to access AI on any page.**
+6. **Login With Your MindsDB Credentials and and OpenAI Key**
+   ![login](https://github.com/parthiv11/Mind-Your-AI/assets/75653580/666d632e-80a6-4627-88fd-5db5c32d957d)
+
+
+9. **Now it's Ready to Use, Select context from the webpage and press <kbd>Alt+A</kbd> to access AI on any page.**
 
 
 ## Making a Production Build
