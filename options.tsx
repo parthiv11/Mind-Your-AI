@@ -109,7 +109,7 @@ const SignIn = () => {
                     type="password"
                     value={key}
                     onChange={(e) => setKey(e.target.value)}
-                    placeholder="sk-...GPT-ULTRA-PRO-MAX...."
+                    placeholder="sk-...[AI FOR SAFETY]...."
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
@@ -138,7 +138,7 @@ const SignIn = () => {
           <div className="w-1/2 shadow-2xl">
             <img
               className="object-cover w-full h-screen hidden md:block"
-              src="https://source.unsplash.com/random/?save-nature,animals"
+              src="https://source.unsplash.com/random/?bear,animals,creative"
             />
           </div>
         </div>
