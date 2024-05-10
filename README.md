@@ -85,4 +85,10 @@ plasmo build --target=firefox-mv3
 This will generate a production bundle that can be zipped and used.
 
 
+## Don't have time/mood to read, then watch video for features
+https://github.com/parthiv11/Mind-Your-AI/assets/75653580/99aa375e-00d5-48f8-a2dc-92b4eac40abd
+
+
 Feel free to reach out to us if you encounter any issues or need further assistance. Happy coding!
+
+
